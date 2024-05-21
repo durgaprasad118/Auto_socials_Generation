@@ -18,9 +18,12 @@ function TagsInput() {
   const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
   const fetchSocialData = async (tag) => {
     try {
-      const { data } = await axios.post('http://localhost:2023/info', {
-        domain: tag
-      })
+      const { data } = await axios.post(
+        'https://auto-socials-generation-c7dk.onrender.com/info',
+        {
+          domain: tag,
+        },
+      )
       setSocials((prevSocials) => [...prevSocials, data])
     } catch (error) {
       console.log(`Error fetching data for ${tag}:`, error)
