@@ -1,5 +1,11 @@
+
+import TagsInput from "./Input"
 function App() {
-  return <div>Hello</div>;
+  return (
+    <div>
+      <TagsInput/>
+    </div>
+  )
 }
 
-export default App;
+export default App
