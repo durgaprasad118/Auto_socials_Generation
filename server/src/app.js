@@ -26,6 +26,7 @@ app.post('/info', async (req, res) => {
       ;(answer.followersCount = existingDomain.followersCount),
         (answer.numberOfEmployees = existingDomain.numberOfEmployees)
       answer.message = 'Data fetched successfully'
+      return res.json(answer)
     }
     const { numberOfEmployees, followersCount } = await fetchLinkedInData(
       domain,
