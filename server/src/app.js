@@ -9,7 +9,8 @@ app.use(express.static('public'))
 app.use(cors())
 app.post('/info', async (req, res) => {
   try {
-    const { domain } = req.body
+    let { domain } = req.body;
+    domain= domain.toLowerCase();
     const existingDomain = await Socials.findOne({ domain })
     let answer = {
       domain: domain,
@@ -29,19 +30,20 @@ app.post('/info', async (req, res) => {
     const { numberOfEmployees, followersCount } = await fetchLinkedInData(
       domain,
     )
-    answer.followersCount = followersCount
-    answer.numberOfEmployees = numberOfEmployees
-    answer.message="Data fetcehd successfully"
-    if (!existingDomain) {
+    if(numberOfEmployees !=0 && followersCount!=0){
       const domainData = await Socials.create({
         domain,
         numberOfEmployees,
         followersCount,
       })
-    } else {
-      await Socials.updateOne({ domain }, { numberOfEmployees, followersCount })
+      answer.followersCount = domainData.followersCount
+      answer.numberOfEmployees = domainData.numberOfEmployees
+      answer.message="Data fetched successfully"
+    }else{
+      answer.followersCount = followersCount
+      answer.numberOfEmployees = numberOfEmployees
+      answer.message="Blockage of ip"
     }
-
    res.status(200).json(answer)
   } catch (error) {
     console.error('Error fetching social data:', error)

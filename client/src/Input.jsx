@@ -9,7 +9,6 @@ function TagsInput() {
   const [tags, setTags] = useState([])
   const [socials, setSocials] = useState([])
   const [loading, setLoding] = useState(false)
-
   const handleInputChange = (event) => {
     const inputValue = event.target.value
     const newTags = inputValue.split('\n').map((tag) => tag.trim())
@@ -57,6 +56,7 @@ function TagsInput() {
         placeholder="Enter inputs separated by line breaks"
         value={tags.join('\n')}
         onChange={handleInputChange}
+        disabled={loading}
       />
       <Button
         isProcessing={loading}
